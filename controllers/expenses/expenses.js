@@ -47,7 +47,7 @@ const updateExpenseById = async (req, res) => {
   try {
     const {
       params: { expenseId },
-      body: { userId, description, amount, category, createdAt },
+      body: { userId, description, amount,transactionType  , modeOfPayment , category,  createdAt },
     } = req;
 
     const expense = await Expense.findByIdAndUpdate(
@@ -56,6 +56,8 @@ const updateExpenseById = async (req, res) => {
         userId,
         description,
         amount,
+        transactionType,
+        modeOfPayment,
         category,
         createdAt,
         updatedAt: Date.now()
@@ -92,6 +94,21 @@ const deleteExpenseById = async (req, res) => {
   }
 };
 
+const getExpenseByCategory = async (req, res) => {
+  try {
+    const filerCategory = req.query.category;
+
+    const expenses = await Expense.find({ category: filerCategory });
+
+    if (expenses.length === 0) {
+      return res.status(404).send({ error: `No expenses found with category ${category}` });
+    }
+    res.json({ expenses });
+  } catch (err) {
+    console.log("Error in getting expense by category", err);
+  }
+};
+
 
 module.exports = {
   createExpense,
@@ -99,4 +116,5 @@ module.exports = {
   updateExpenseById,
   getExpenseById,
   deleteExpenseById,
+  getExpenseByCategory
 };

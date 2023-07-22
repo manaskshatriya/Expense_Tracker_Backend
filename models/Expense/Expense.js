@@ -16,7 +16,17 @@ const ExpenseSchema = new mongoose.Schema({
         required: [true, 'Please provide amount'],
         min: 1,
     },
-    catergory:{
+    //Credit or Debit
+    transactionType:{
+        type: String,
+        required: [true, 'Please provide type'],
+    },
+    //online or cash
+    modeOfPayment:{
+        type: String,
+        required: [true, 'Please provide mode of payment'],
+    },
+    category:{
         type: String,
         required: [true, 'Please provide catergory'],
     },  
