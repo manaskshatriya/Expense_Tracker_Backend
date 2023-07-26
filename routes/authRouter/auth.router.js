@@ -27,27 +27,27 @@ app.get("/", (req, res) => {
 });
 
 
-app.get('/auth/google',
+app.get('/google',
   passport.authenticate('google', { scope:
       [ 'email', 'profile' ] }
 ));
 
-app.get( '/auth/google/callback',
+app.get( '/google/callback',
     passport.authenticate( 'google', {
         successRedirect: '/auth/google/success',
         failureRedirect: '/auth/google/failure'
 }));
 
-app.get('/auth/google/success', (req, res) => {
+app.get('/google/success', (req, res) => {
   res.json(req.user)
 
 }); 
 
-app.get('/auth/google/failure', isLoggedIn ,  (req, res) => {
+app.get('/google/failure', isLoggedIn ,  (req, res) => {
   res.send('failure')
 });
 
-app.use('/auth/logout', (req, res) => {
+app.use('/logout', (req, res) => {
   req.session.destroy();
   console.log('logged out');
   res.redirect('/');
